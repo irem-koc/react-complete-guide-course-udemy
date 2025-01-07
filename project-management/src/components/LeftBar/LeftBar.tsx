@@ -2,12 +2,14 @@ import React from "react";
 
 const LeftBar = () => {
   return (
-    <div className="w-1/5 h-[100vh]  rounded-r-md p-10 bg-black">
-      <h1 className="text-white text-md font-semibold mb-5">YOUR PROJECTS</h1>
-      <button className="p-3 text-gray-300 bg-gray-300 bg-opacity-20 rounded-md">
+    <aside className="w-1/3 px-8 py-16 bg-stone-900 rounded-r-xl text-stone-50 md:w-72">
+      <h1 className="text-stone-200 md:text-xl text-md font-bold mb-8 uppercase">
+        Your Projects
+      </h1>
+      <button className="px-4 py-2 text-xs md:text-base text-stone-400 hover:bg-stone-600 bg-stone-700 hover:text-stone-100 bg-opacity-20 rounded-md">
         + Add project
       </button>
-    </div>
+    </aside>
   );
 };
 export default LeftBar;
