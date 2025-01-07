@@ -3,10 +3,10 @@ import NoProject from "./components/NoProject/NoProject";
 
 function App() {
   return (
-    <div className="max-w-full flex">
+    <main className="h-screen my-8">
       <LeftBar />
       <NoProject />
-    </div>
+    </main>
   );
 }
 
