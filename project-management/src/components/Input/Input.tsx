@@ -1,15 +1,20 @@
 import React from "react";
 
 const Input = ({ textarea, label, ...props }) => {
+  const className =
+    "w-full p-1 border-b-2 rounded-sm border-stone-300 bg-stone-200 text-stone-600 focus:outline-none focus:border-stone-600";
   return (
-    <p>
-      <label className="uppercase text-stone-700" htmlFor="title">
+    <p className="flex flex-col gap-1 my-4">
+      <label
+        className="text-sm font-bold uppercase text-stone-500"
+        htmlFor="title"
+      >
         {label}
       </label>
       {textarea ? (
-        <textarea {...props} />
+        <textarea className={className} {...props} />
       ) : (
-        <input name="title" type="text" {...props} />
+        <input className={className} name="title" type="text" {...props} />
       )}
     </p>
   );
