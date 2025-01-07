@@ -1,19 +1,20 @@
 import React from "react";
+import Button from "../Button/Button";
 import Input from "../Input/Input";
 
 type Props = {};
 
 const NewProject = (props: Props) => {
   return (
-    <div>
-      <menu className="flex list-none">
+    <div className="w-[35rem] mt-16">
+      <menu className="flex items-center justify-end gap-4 my-4 list-none">
         <li>
-          <button className="text-stone-600 hover:border-stone-600">
+          <button className="text-stone-800 hover:border-stone-950">
             Cancel
           </button>
         </li>
         <li>
-          <button className="text-stone-200 bg-stone-800">Save</button>
+          <Button>Save</Button>
         </li>
       </menu>
       <div>
