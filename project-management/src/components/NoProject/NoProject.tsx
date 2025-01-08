@@ -1,7 +1,7 @@
 import React from "react";
 import Button from "../Button/Button";
 
-const NoProject = () => {
+const NoProject = ({ onStartAddProject }) => {
   return (
     <div className="w-2/3 text-center mt-24">
       <img
@@ -16,7 +16,7 @@ const NoProject = () => {
         Select a project or get started with a new one
       </p>
       <p className="mt-8">
-        <Button>+ Add project </Button>
+        <Button onClick={onStartAddProject}>+ Add project </Button>
       </p>
     </div>
   );
