@@ -1,15 +1,37 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
-import Places from './components/Places.jsx';
-import { AVAILABLE_PLACES } from './data.js';
-import Modal from './components/Modal.jsx';
-import DeleteConfirmation from './components/DeleteConfirmation.jsx';
-import logoImg from './assets/logo.png';
+import logoImg from "./assets/logo.png";
+import DeleteConfirmation from "./components/DeleteConfirmation.jsx";
+import Modal from "./components/Modal.jsx";
+import Places from "./components/Places.jsx";
+import { AVAILABLE_PLACES } from "./data.js";
+import { sortPlacesByDistance } from "./loc.js";
 
 function App() {
   const modal = useRef();
   const selectedPlace = useRef();
   const [pickedPlaces, setPickedPlaces] = useState([]);
+  const [availablePlaces, setAvailablePlaces] = useState([]);
+
+  useEffect(() => {
+    // useEffect will be executed after the component function is done executing.
+    navigator.geolocation.getCurrentPosition((position) => {
+      const sortedPlaces = sortPlacesByDistance(
+        AVAILABLE_PLACES,
+        position.coords.latitude,
+        position.coords.longitude
+      );
+      setAvailablePlaces(sortedPlaces);
+    }); //we can get the current position of the user of the website
+  }, []); // if the dependency value change this block will be reexecuted
+  // navigator.geolocation.getCurrentPosition((position) => {
+  //   const sortedPlaces = sortPlacesByDistance(
+  //     AVAILABLE_PLACES,
+  //     position.coords.latitude,
+  //     position.coords.longitude
+  //   );
+  //   setAvailablePlaces(sortedPlaces);
+  // }); //we can get the current position of the user of the website
 
   function handleStartRemovePlace(id) {
     modal.current.open();
@@ -57,14 +79,15 @@ function App() {
       <main>
         <Places
           title="I'd like to visit ..."
-          fallbackText={'Select the places you would like to visit below.'}
+          fallbackText={"Select the places you would like to visit below."}
           places={pickedPlaces}
           onSelectPlace={handleStartRemovePlace}
         />
         <Places
           title="Available Places"
-          places={AVAILABLE_PLACES}
+          places={availablePlaces}
           onSelectPlace={handleSelectPlace}
+          fallbackText={"Sorting places by distance"}
         />
       </main>
     </>
