@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 
 import logoImg from "./assets/logo.png";
 import DeleteConfirmation from "./components/DeleteConfirmation.jsx";
@@ -12,6 +12,7 @@ const storedPlaces = storedIds.map((id) =>
   AVAILABLE_PLACES.find((place) => place.id === id)
 );
 function App() {
+  const [isOpen, setIsOpen] = useState();
   const modal = useRef();
   const selectedPlace = useRef();
   const [pickedPlaces, setPickedPlaces] = useState(storedPlaces);
@@ -38,12 +39,15 @@ function App() {
   // }); //we can get the current position of the user of the website
 
   function handleStartRemovePlace(id) {
-    modal.current.open();
+    // modal.current.open();
+    setIsOpen(true);
     selectedPlace.current = id;
   }
 
   function handleStopRemovePlace() {
-    modal.current.close();
+    setIsOpen(false);
+
+    // modal.current.close();
   }
 
   function handleSelectPlace(id) {
@@ -63,21 +67,23 @@ function App() {
     }
   }
 
-  function handleRemovePlace() {
+  const handleRemovePlace = useCallback(function handleRemovePlace() {
     setPickedPlaces((prevPickedPlaces) =>
       prevPickedPlaces.filter((place) => place.id !== selectedPlace.current)
     );
-    modal.current.close();
+    // modal.current.close();
+    setIsOpen(false);
     const storedIds = JSON.parse(localStorage.getItem("selectedPlaces")) || [];
     if (storedIds.indexOf(selectedPlace.current) !== -1) {
       const updatedIds = { id, ...restIds };
       localStorage.setItem("selectedPlaces", JSON.stringify([...restIds]));
     }
-  }
+  }, []);
 
   return (
     <>
-      <Modal ref={modal}>
+      {/* <Modal ref={modal}> */}
+      <Modal open={isOpen} onClose={handleStopRemovePlace}>
         <DeleteConfirmation
           onCancel={handleStopRemovePlace}
           onConfirm={handleRemovePlace}
